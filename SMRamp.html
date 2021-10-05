@@ -1,0 +1,315 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+*{margin:0;padding:0;}
+body {
+	font:13.34px helvetica,arial,freesans,clean,sans-serif;
+	color:black;
+	line-height:1.4em;
+	background-color: #F8F8F8;
+	padding: 0.7em;
+}
+p {
+	margin:1em 0;
+	line-height:1.5em;
+}
+table {
+	font-size:inherit;
+	font:100%;
+	margin:1em;
+}
+table th{border-bottom:1px solid #bbb;padding:.2em 1em;}
+table td{border-bottom:1px solid #ddd;padding:.2em 1em;}
+input[type=text],input[type=password],input[type=image],textarea{font:99% helvetica,arial,freesans,sans-serif;}
+select,option{padding:0 .25em;}
+optgroup{margin-top:.5em;}
+pre,code{font:12px Monaco,"Courier New","DejaVu Sans Mono","Bitstream Vera Sans Mono",monospace;}
+pre {
+	margin:1em 0;
+	font-size:12px;
+	background-color:#eee;
+	border:1px solid #ddd;
+	padding:5px;
+	line-height:1.5em;
+	color:#444;
+	overflow:auto;
+	-webkit-box-shadow:rgba(0,0,0,0.07) 0 1px 2px inset;
+	-webkit-border-radius:3px;
+	-moz-border-radius:3px;border-radius:3px;
+}
+pre code {
+	padding:0;
+	font-size:12px;
+	background-color:#eee;
+	border:none;
+}
+code {
+	font-size:12px;
+	background-color:#f8f8ff;
+	color:#444;
+	padding:0 .2em;
+	border:1px solid #dedede;
+}
+img{border:0;max-width:100%;}
+abbr{border-bottom:none;}
+a{color:#4183c4;text-decoration:none;}
+a:hover{text-decoration:underline;}
+a code,a:link code,a:visited code{color:#4183c4;}
+
+h1,h2,h3,h4,h5,h6{border:0;}
+
+h1{font-size:200%;margin-top:1em;margin-bottom:1em}
+
+h2{font-size:170%;padding-bottom:.5em;border-bottom:1px solid #d0d0d0;margin-top:1em;}
+
+h3{margin-top:1em;}
+
+hr{border:1px solid #ddd;}
+ul{margin:1em 0 1em 2em;}
+ol{margin:1em 0 1em 2em;}
+ul li,ol li{margin-top:.5em;margin-bottom:.5em;}
+ul ul,ul ol,ol ol,ol ul{margin-top:0;margin-bottom:0;}
+
+blockquote{margin:1em 0;border-left:5px solid #ddd;padding-left:.6em;color:#555;}
+
+dt{font-weight:bold;margin-left:1em;}
+dd{margin-left:2em;margin-bottom:1em;}
+@media screen and (min-width: 768px) {
+    body {
+        width: 748px;
+        margin:10px auto;
+    }
+}
+</style>
+<title>SMRamp Library</title>
+</head>
+<body>
+<p><img src="http://automationresourcesgroup.com/images/arglogo254x54.png" alt="Automation Resources Group" /></p>
+
+<h1>SMRamp Library</h1>
+
+<p>The SMRamp library provides a clean interface for control of stepper motors using ramp mode.</p>
+
+<p>Every motion axis has a set of basic functionality in common. This includes powering and homing the axis, performing basic moves, and reading back status information. The SMRamp library bundles the most common motion control commands and status information together into one clean interface. This leads to significantly faster development of motion applications with stepper motors.</p>
+
+<h1>Usage</h1>
+
+<p>The SMRamp functionality can be integrated into any project using a data structure and a function call. For an example of how to use this in a project, please see the ARG Automation Studio Starter Project at <a href="https://github.com/autresgrp/StarterProject">https://github.com/autresgrp/StarterProject</a>.</p>
+
+<h2>Initialization</h2>
+
+<p>To use the SMRamp functionality, a variable must be declared of type <strong>SMR_Axis_typ</strong>. This variable should then be initialized in the INIT routine of your program. This initialization consists of setting configuration settings and initial motion parameters.</p>
+
+<pre><code>SMRAxis.IN.CFG.DisableAcyclicWrite:=        0;
+SMRAxis.IN.CFG.ModuleINADeviceName:=        'IF6.ST1';
+SMRAxis.IN.CFG.MotorIndex:=                 1;
+
+SMRAxis.IN.CFG.UnderCurrentDetection:=      0;
+SMRAxis.IN.CFG.ABRCtrSyncAsync:=            0;
+SMRAxis.IN.CFG.StallDetection:=             0;
+
+SMRAxis.IN.CFG.InvertDirection:=            0;
+
+SMRAxis.IN.CFG.SpeedEstimator.tf:=          0;
+SMRAxis.IN.CFG.SpeedEstimator.deadband:=    0;
+SMRAxis.IN.CFG.SpeedEstimator.K:=           0;
+
+SMRAxis.IN.PAR.HomingPosition:=     0;
+SMRAxis.IN.PAR.HomingMode:=         SMR_HOMEMODE_DIRECT;
+SMRAxis.IN.PAR.HomingVelocity:=     REAL_TO_UINT(1 * SMR_RPM2VEL);
+SMRAxis.IN.PAR.HomingStartDir:=     SMR_POS;
+SMRAxis.IN.PAR.HomingEdgeSw:=       SMR_POS;
+SMRAxis.IN.PAR.HomingTriggDir:=     SMR_POS;
+
+SMRAxis.IN.PAR.Position:=           0;
+SMRAxis.IN.PAR.Direction:=          SMR_DIR_POS;
+SMRAxis.IN.PAR.Velocity:=           REAL_TO_UINT(10 * SMR_RPM2VEL);
+SMRAxis.IN.PAR.Acceleration:=       REAL_TO_UINT(100 * SMR_RPMPS2ACC);
+SMRAxis.IN.PAR.Deceleration:=       REAL_TO_UINT(100 * SMR_RPMPS2ACC);
+
+SMRAxis.IN.PAR.JogVelocity:=        REAL_TO_UINT(1 * SMR_RPM2VEL);
+
+SMRAxis.IN.PAR.StopDeceleration:=   REAL_TO_UINT(100 * SMR_RPMPS2ACC);
+</code></pre>
+
+<p>The interface from the SMRAxis variable to the stepper motor hardware is done via IO mappings. All necessary IO points are contained in the SMRAxis.IOMap structure. The stepper motor IO points should be mapped to the stepper module for the appropriate motor. These IO points are named consistently with the IO mapping entry names for the modules.</p>
+
+<p>In addition to the required stepper motor IO points, the IOMap structure contains digital inputs for home and limit switches and a quick stop input. These digital inputs are assumed to have the most common active levels. The home switch is considered active when TRUE (active high). The limit switch and quick stop inputs are considered active when FALSE (active low). These inputs can be inverted on the input module to change these active levels. If no hardware switches are present, then the limit switch and quick stop inputs should be set to TRUE to allow motion.</p>
+
+<h2>Cyclic Operation</h2>
+
+<p>To control the axis cyclically, the <strong>SMR_AxisFn_Cyclic()</strong> function must be called in the CYCLIC routine of your program, once every scan, unconditionally. This function should not be called on the same SMRAxis variable more than once per scan.</p>
+
+<pre><code>SMR_AxisFn_Cyclic( SMRAxis );
+</code></pre>
+
+<p>The SMRAxis can then be used as an interface for higher level motion sequencing programs.</p>
+
+<pre><code>CASE State OF
+
+    ST_IDLE:
+
+        SMRAxis.IN.CMD.Power:=  0;
+
+        IF( Start )THEN
+
+            Start:= 0;
+
+            IF(         SMRAxis.OUT.STAT.DriveStatus.RdyToSwOn
+                AND NOT SMRAxis.OUT.STAT.DriveStatus.SwOn
+                )THEN
+
+                State:= ST_POWERON;
+
+            END_IF
+
+        END_IF
+
+    ST_POWERON:
+
+        SMRAxis.IN.CMD.Power:=  1;
+
+        IF( SMRAxis.OUT.STAT.DriveStatus.OpEnabled )THEN
+
+            State:= ST_HOME;
+
+        END_IF
+
+    ST_HOME:
+
+        SMRAxis.IN.CMD.Home:=   1;
+
+        IF(     SMRAxis.OUT.STAT.Done
+            AND SMRAxis.OUT.STAT.DriveStatus.HomingOk
+            )THEN                       
+
+            SMRAxis.IN.CMD.Home:=   0;
+
+            State:= ST_JOG;
+
+        END_IF
+
+    ST_JOG:
+
+        SMRAxis.IN.CMD.JogForward:= 1;
+
+        IF( Stop )THEN
+
+            Stop:=  0;
+
+            SMRAxis.IN.CMD.JogForward:= 0;
+
+            State:= ST_IDLE;
+
+        END_IF
+
+END_CASE
+</code></pre>
+
+<h1>Reference</h1>
+
+<h2>SMRAxis Data Structure</h2>
+
+<p>The main data structure of the SMRamp library is the SMRAxis structure (SMR_Axis_typ datatype). This provides the interface to higher level programs and also stores all necessary internal information. It is divided into inputs (SMRAxis.IN), outputs (SMRAxis.OUT), a test interface (SMRAxis.TEST), IO points (SMRAxis.IOMap) and internals (SMRAxis.Internal).</p>
+
+<h3>Inputs</h3>
+
+<p>The SMRAxis inputs are divided into commands (IN.CMD), parameters (IN.PAR), and configuration settings (IN.CFG). Commands are used to initiate operations, and parameters and configuration settings determine how the commands will be processed. The difference between parameters and configuration settings is that configuration settings are generally set only once, while parameters might be set any time a command is issued.</p>
+
+<h4>Commands</h4>
+
+<ul>
+<li><strong>Power</strong> - Power the axis. If set to 1, the axis will be powered. If set to 0, the axis will be depowered.</li>
+<li><strong>Home</strong> - Home the axis using the <strong>Homing</strong> parameters.</li>
+<li><strong>MoveAbsolute</strong> - Perform a move to an absolute position. Uses the <strong>Position</strong>, <strong>Velocity</strong>, <strong>Acceleration</strong>, and <strong>Deceleration</strong> parameters.</li>
+<li><strong>MoveAdditive</strong> - Perform an additive move. The <strong>Position</strong> parameter is added to the current target position (NOT the current actual position). Uses the <strong>Position</strong>, <strong>Velocity</strong>, <strong>Acceleration</strong>, and <strong>Deceleration</strong> parameters.</li>
+<li><strong>MoveVelocity</strong> - Perform a velocity move. The axis accelerates to the <strong>Velocity</strong> parameter and continues until another command is issued. If a new velocity is desired, the <strong>MoveVelocity</strong> command must be toggled. Uses the <strong>Velocity</strong>, <strong>Acceleration</strong>, <strong>Deceleration</strong>, and <strong>Direction</strong> parameters.</li>
+<li><strong>JogForward</strong> - Jog the axis forward. The axis will stop when this command is reset. Uses the <strong>JogVelocity</strong>, <strong>Acceleration</strong>, and <strong>Deceleration</strong> parameters.</li>
+<li><strong>JogReverse</strong> - Jog the axis backwards. The axis will stop when this command is reset. Uses the <strong>JogVelocity</strong>, <strong>Acceleration</strong>, and <strong>Deceleration</strong> parameters.</li>
+<li><strong>TrackSetPosition</strong> - Track the input position. When set to 1, the axis will continually track the input position. Uses the <strong>Position</strong>, <strong>Velocity</strong>, <strong>Acceleration</strong>, and <strong>Deceleration</strong> parameters.</li>
+<li><strong>Stop</strong> - Stop the axis. When set to 1, all other motion commands will be ignored and the axis will remain stopped. Uses the <strong>StopDeceleration</strong> parameter.</li>
+<li><strong>AcknowledgeError</strong> - Acknowledge any errors on the axis.</li>
+</ul>
+
+
+<h4>Parameters</h4>
+
+<ul>
+<li><strong>HomingPosition</strong> - Actual position after homing the axis. All position parameters are entered in the native units for ramp mode, microsteps. The SMR_REV2POS constant can be used to convert from revolutions to microsteps. This constant assumes that the motor has 200 full steps per revolution. [microsteps]</li>
+<li><strong>HomingMode</strong> - Mode with which to home the axis. Possible values are SMR_HOMEMODE_DIRECT, SMR_HOMEMODE_SWITCH_GATE, SMR_HOMEMODE_ABS_SWITCH, and SMR_HOMEMODE_LIMIT_SWITCH. These homing modes replicate some of the homing modes possible via the acp10mc PLC Open motion control library. For details on these homing modes and the following homing parameters, please see the AS online help for the MC_Home function block in the acp10mc library.</li>
+<li><strong>HomingVelocity</strong> - Velocity for homing moves. All velocity parameters are entered in the native units for ramp mode, microsteps/25ms. The SMR_RPM2VEL constant can be used to convert from RPM to microsteps/25ms. This constant assumes that the motor has 200 full steps per revolution. [microsteps/25ms]</li>
+<li><strong>HomingStartDir</strong> - Direction in which to start searching for the home switch. Possible values are SMR_POS and SMR_NEG.</li>
+<li><strong>HomingEdgeSw</strong> - Edge of the home switch to home to. Possible values are SMR_POS and SMR_NEG.</li>
+<li><strong>HomingTriggDir</strong> - Side of the home switch edge to home to. Possible values are SMR_POS and SMR_NEG.</li>
+<li><strong>Position</strong> - Position for absolute and additive moves and for tracking set position. [microsteps]</li>
+<li><strong>Direction</strong> - Direction for velocity moves. Possible values are SMR_DIR_POS and SMR_DIR_NEG.</li>
+<li><strong>Velocity</strong> - Velocity for absolute, additive, and velocity moves, and for tracking set positions. [microsteps/25ms]</li>
+<li><strong>Acceleration</strong>, <strong>Deceleration</strong> - Acceleration and deceleration for absolute, additive, velocity, and jog moves, and for tracking set positions. All acceleration parameters are entered in the native units for ramp mode, microsteps/25ms/25ms. The SMR_RPMPS2ACC constant can be used to convert from RPM/s to microsteps/25ms/25ms. This constant assumes that the motor has 200 full steps per revolution.  [microsteps/25ms/25ms]</li>
+<li><strong>JogVelocity</strong> - Velocity for jog moves. [microsteps/25ms]</li>
+<li><strong>StopDeceleration</strong> - Deceleration for stopping. [microsteps/25ms/25ms]</li>
+</ul>
+
+
+<h4>Configuration Settings</h4>
+
+<ul>
+<li><strong>DisableAcyclicWrite</strong> - Specifies whether or not the <strong>Velocity</strong>, <strong>Acceleration</strong>, and <strong>Deceleration</strong> parameters should be written to the stepper module acyclically. If <strong>DisableAcyclicWrite</strong> is set to 1, these parameters cannot be changed during runtime, and must be set in the module IO configuration. <strong>If the stepper module is behind a bus controller, acyclic writes should be disabled.</strong> For more information on access to acyclic registers on IO modules, please see the help for the AsIOAcc library and the register description for the module in question. For modules behind bus controllers, please see the documentation for the bus controller you are using.</li>
+<li><strong>ModuleINADeviceName</strong> - INA device name of the stepper module. This is used to address the module during acyclic writes. The INA device name can be found by right clicking the stepper module in the Physical View and selecting Properties. The INA device name is listed as the Address in the resulting window. Alternatively, the IODBLib library can be used to look up the INA device name based on a connected IO point. For details on this, please see the documentation for the IODBLib library. If acyclic writes are disabled, then this parameter does not need to be set.</li>
+<li><strong>MotorIndex</strong> - Index of the motor to control. Possible values are 1 and 2, depending on which channel should be controlled (for X67SM4320 modules, please contact ARG for support). If acyclic writes are disabled, then this parameter does not need to be set.</li>
+<li><strong>UnderCurrentDetection</strong> - Enables under current detection when set to 1.</li>
+<li><strong>ABRCtrSyncAsync</strong> - Specifies which motor position should be reported. If set to 0, then the internal step counter is reported as the current position in microsteps; if set to 1, then the attached ABR encoder position is reported as the current position in counts. Note that these units are hardly ever equivalent, so conversion will be required if the encoder position is reported.</li>
+<li><strong>StallDetection</strong> - Enables motor stall detection when set to 1. Since stall detection requires configuration based on motor parameters, it is not recommended to enable this feature without appropriate cause and expertise.</li>
+<li><strong>InvertDirection</strong> - Inverts the motor rotation direction when set to 1. <strong>THIS SETTING SHOULD NOT BE CHANGED WHILE THE MOTOR IS POWERED, OR UNEXPECTED MOTION COULD RESULT!</strong></li>
+<li><strong>SpeedEstimator</strong> - These settings configure the internal speed estimator used to report the current motor speed. If motor speed feedback is not desired, these parameters can be set to 0. Otherwise, they can be used to tune the response of the speed estimator. For details on these parameters, please see the documentation for the SpdEstLib library.</li>
+</ul>
+
+
+<h3>Outputs</h3>
+
+<p>The SMRAxis outputs contain status information (OUT.STAT).</p>
+
+<ul>
+<li><strong>ReadyForCMD</strong> - The SMRAxis is ready for a new command.</li>
+<li><strong>Busy</strong> - Operation is currently being processed.</li>
+<li><strong>Done</strong> - Operation completed successfully. <strong>Done</strong> is reset when the input command is reset.</li>
+<li><strong>Error</strong> - An error exists for the axis. <strong>Error</strong> is reset with the <strong>AcknowledgeError</strong> command.</li>
+<li><strong>ErrorID</strong> - Current error ID number.</li>
+<li><strong>ErrorString</strong> - Current error text.</li>
+<li><strong>ErrorState</strong> - State in which the error occurred.</li>
+<li><strong>ActualPosition</strong> - Current axis position. [microsteps or counts]</li>
+<li><strong>ActualVelocity</strong> - Current axis velocity. [microsteps/s or counts/s]</li>
+<li><strong>DriveStatus</strong> - Extended drive status information. See the ramp mode help for details.</li>
+<li><strong>State</strong> - Current axis state.</li>
+</ul>
+
+
+<h3>Test Interface</h3>
+
+<p>The test interface gives you direct access to the axis commands and parameters, interrupting any commands from higher level programs. This allows for easy testing of the axis during machine commissioning or servicing. <strong>The test commands and parameters are intended for use in an Automation Studio watch window and SHOULD NOT BE SET IN PROGRAMS</strong>.</p>
+
+<ul>
+<li><strong>Enable</strong> - If set to 1, TEST.CMD and TEST.PAR take priority over IN.CMD and IN.PAR. If set to 0, then TEST.CMD and TEST.PAR are ignored.</li>
+<li><strong>CMD</strong> - Test commands. See above for a full list of commands.</li>
+<li><strong>PAR</strong> - Test parameters. See above for a full list of parameters.</li>
+<li><strong>STAT</strong> - A reduced set of status information that is always available whether test mode is enabled or not.</li>
+</ul>
+
+
+<h2>Error ID Numbers</h2>
+
+<ul>
+<li>30190 - 30196 - These errors are passed on from the AsIOAcc library used to write to acyclic registers on the stepper module. Check that the <strong>ModuleINADeviceName</strong> and <strong>MotorIndex</strong> configuration settings are correct. If you are using an X67SM4320 module, please contact ARG for support. For further information, please see the AS online help.</li>
+<li>50000 - SMR_ERR_INVALIDPAR_ACC - <strong>Acceleration</strong> is 0.</li>
+<li>50001 - SMR_ERR_INVALIDPAR_DEC - <strong>Deceleration</strong> is 0.</li>
+<li>50002 - SMR_ERR_INVALIDPAR_STOPDEC - <strong>StopDeceleration</strong> is 0.</li>
+<li>50003 - SMR_ERR_INVALIDPAR_DIR - <strong>Direction</strong> is invalid. Valid values are <strong>SMR_DIR_POS</strong> and <strong>SMR_DIR_NEG</strong>.</li>
+<li>50004 - SMR_ERR_HOME_INVALIDPAR - One or more homing parameters are invalid.</li>
+<li>50005 - SMR_ERR_HOME_ERR - An error occurred while homing. Check wiring of switches and homing configuration.</li>
+<li>50006 - SMR_ERR_POSLIMSW - Positive limit switch is active. Movement in the positive direction is not allowed.</li>
+<li>50007 - SMR_ERR_NEGLIMSW - Negative limit switch is active. Movement in the negative direction is not allowed.</li>
+</ul>
+
+</body>
+</html>

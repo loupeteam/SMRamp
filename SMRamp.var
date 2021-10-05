@@ -1,0 +1,116 @@
+(********************************************************************
+ * COPYRIGHT -- B&R Industrial Automation
+ ********************************************************************
+ * Library: SMRamp
+ * File: SMRamp.var
+ * Author: blackburnd
+ * Created: August 31, 2009
+ ********************************************************************
+ * Constants of library SMRamp
+ ********************************************************************)
+(*External Constants*)
+VAR CONSTANT
+	SMR_STRLEN_ERROR : USINT := 120;
+END_VAR
+(*Error Constants*)
+VAR CONSTANT
+	SMR_ERR_INVALIDPAR_ACC : UINT := 50000;
+	SMR_ERR_INVALIDPAR_DEC : UINT := 50001;
+	SMR_ERR_INVALIDPAR_STOPDEC : UINT := 50002;
+	SMR_ERR_INVALIDPAR_DIR : UINT := 50003;
+	SMR_ERR_HOME_INVALIDPAR : UINT := 50004;
+	SMR_ERR_HOME_ERR : UINT := 50005;
+	SMR_ERR_POSLIMSW : UINT := 50006;
+	SMR_ERR_NEGLIMSW : UINT := 50007;
+	SMR_STAT_DISABLED : UINT := 65534;
+END_VAR
+(*Main State Machine*)
+VAR CONSTANT
+	SMR_ST_NOTRDYTOSWON : UINT := 0;
+	SMR_ST_SWONDISABLED : UINT := 10;
+	SMR_ST_RDYTOSWON : UINT := 20;
+	SMR_ST_SWON : UINT := 30;
+	SMR_ST_ENABLED : UINT := 100;
+	SMR_ST_QUICKSTOPACTIVE : UINT := 200;
+	SMR_ST_FAULTRXNACTIVE : UINT := 998;
+	SMR_ST_FAULT : UINT := 999;
+END_VAR
+(*Movement directions*)
+VAR CONSTANT
+	SMR_DIR_POS : SINT := 1;
+	SMR_DIR_NEG : SINT := -1;
+END_VAR
+(*Homing Direction and Edge constants*)
+VAR CONSTANT
+	SMR_POS : SINT := 1;
+	SMR_NEG : SINT := -1;
+END_VAR
+(*Homing Modes*)
+VAR CONSTANT
+	SMR_HOMEMODE_DIRECT : SINT := 0;
+	SMR_HOMEMODE_SWITCH_GATE : SINT := 1;
+	SMR_HOMEMODE_ABS_SWITCH : SINT := 2;
+	SMR_HOMEMODE_LIMIT_SWITCH : SINT := 4;
+	SMR_HOMEMODE_END_SWITCH : SINT := 4;
+END_VAR
+(*Internal Constants*)
+(*Control Word Bits*)
+VAR CONSTANT
+	SMR_CTRLBIT_SWON : USINT := 0;
+	SMR_CTRLBIT_ENABLEVOLTAGE : USINT := 1;
+	SMR_CTRLBIT_QUICKSTOP : USINT := 2;
+	SMR_CTRLBIT_ENABLEOPERATION : USINT := 3;
+	SMR_CTRLBIT_FAULTRESET : USINT := 7;
+	SMR_CTRLBIT_WARNINGRESET : USINT := 12;
+	SMR_CTRLBIT_UNDERCURRENT : USINT := 13;
+	SMR_CTRLBIT_SYNCPOS : USINT := 14;
+	SMR_CTRLBIT_STALLDETECT : USINT := 15;
+END_VAR
+(*MPGen Control Modes*)
+VAR CONSTANT
+	SMR_MODE_POSITION : SINT := 1;
+	SMR_MODE_VELOCITY : SINT := 2;
+	SMR_MODE_SETACTPOS : SINT := -122;
+	SMR_MODE_HOMEPOS : SINT := -127;
+	SMR_MODE_HOMENEG : SINT := -128;
+	SMR_MODE_ : SINT := 0;
+END_VAR
+(*Movement directions*)
+VAR CONSTANT
+	SMR_DIR_STOP : SINT := 0;
+	SMR_DIR_INVALID : SINT := 0;
+END_VAR
+(*Enabled State Machine*)
+VAR CONSTANT
+	SMR_STEN_WAIT : UINT := 0;
+	SMR_STEN_PARWRITE : UINT := 5;
+	SMR_STEN_HOME : UINT := 100;
+	SMR_STEN_JOGFWD : UINT := 200;
+	SMR_STEN_JOGREV : UINT := 205;
+	SMR_STEN_TRACKSETPOS : UINT := 300;
+	SMR_STEN_SETPOS : UINT := 305;
+	SMR_STEN_SETVEL : UINT := 310;
+	SMR_STEN_SETSTOP : UINT := 320;
+	SMR_STEN_ERROR : UINT := 999;
+	SMR_STEN_ : UINT := 0;
+END_VAR
+(*Homing State Machine*)
+VAR CONSTANT
+	SMR_STHOME_CHECKMODE : UINT := 0;
+	SMR_STHOME_SG_START : UINT := 100;
+	SMR_STHOME_SG_MOVE : UINT := 110;
+	SMR_STHOME_ABS_START : UINT := 200;
+	SMR_STHOME_ABS_MOVE : UINT := 210;
+	SMR_STHOME_END_START : UINT := 400;
+	SMR_STHOME_END_MOVE : UINT := 410;
+	SMR_STHOME_STOPPING : UINT := 500;
+	SMR_STHOME_DONE : UINT := 600;
+	SMR_STHOME_ERROR : UINT := 999;
+	SMR_STHOME_ : UINT := 0;
+END_VAR
+(*Scaling Factors*)
+VAR CONSTANT
+	SMR_REV2POS : REAL := 51200.0; (*Scale from revs to usteps. 1 rev = 51200 usteps*)
+	SMR_RPM2VEL : REAL := 21.33333; (*Scale from RPM to usteps/25ms. (1 rev/min) * (51200 usteps/rev) * (1 min / 60 s) * (0.025 s / 25 ms) = 21.33333 usteps/25ms*)
+	SMR_RPMPS2ACC : REAL := 0.5333334; (*Scale from RPM/s to usteps/25ms/25ms. (1 rev/min/s) * (51200 usteps/rev) * (1 min / 60 s) * (0.025 s / 25 ms) * (0.025 s / 25 ms) = 0.533333 usteps/25ms/25ms*)
+END_VAR
