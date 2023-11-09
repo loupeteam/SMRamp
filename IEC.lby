@@ -4,7 +4,6 @@
   <Files>
     <File>SMRamp.html</File>
     <File>SMRamp.md</File>
-    <File>VersionHistory.txt</File>
     <File Description="Exported data types">SMRamp.typ</File>
     <File Description="Exported constants">SMRamp.var</File>
     <File Description="Exported functions and function blocks">SMRamp.fun</File>
