@@ -1,13 +1,12 @@
-(********************************************************************
- * COPYRIGHT -- B&R Industrial Automation
- ********************************************************************
- * Library: SMRamp
- * File: SetState.st
- * Author: blackburnd
- * Created: September 01, 2009
- ********************************************************************
- * Implementation of library SMRamp
- ********************************************************************) 
+(*
+* File: SMR_SetState.st
+* Copyright (c) 2023 Loupe
+* https://loupe.team
+* 
+* This file is part of SMRamp, licensed under the MIT License.
+*
+*)
+
 
 
 (*This function sets the state based on the status bits.*)

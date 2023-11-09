@@ -1,13 +1,11 @@
-(********************************************************************
- * COPYRIGHT -- B&R Industrial Automation
- ********************************************************************
- * Library: SMRamp
- * File: SMRamp.typ
- * Author: blackburnd
- * Created: August 31, 2009
- ********************************************************************
- * Data types of library SMRamp
- ********************************************************************)
+(*
+* File: SMRamp.typ
+* Copyright (c) 2023 Loupe
+* https://loupe.team
+* 
+* This file is part of SMRamp, licensed under the MIT License.
+*
+*)
 
 TYPE
 	SMR_Axis_Int_ParUpdate_typ : 	STRUCT 

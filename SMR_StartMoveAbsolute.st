@@ -1,13 +1,12 @@
-(********************************************************************
- * COPYRIGHT --  
- ********************************************************************
- * Library: SMRamp
- * File: SMR_StartMoveAbsolute.st
- * Author: David
- * Created: March 21, 2011
- ********************************************************************
- * Implementation of library SMRamp
- ********************************************************************) 
+(*
+* File: SMR_StartMoveAbsolute.st
+* Copyright (c) 2023 Loupe
+* https://loupe.team
+* 
+* This file is part of SMRamp, licensed under the MIT License.
+*
+*)
+
 
 
 (********************************************************************)

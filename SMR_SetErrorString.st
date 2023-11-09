@@ -1,13 +1,11 @@
-(********************************************************************
- * COPYRIGHT -- Automation Resources Group
- ********************************************************************
- * Library: SMRamp
- * File: SMR_SetErrorString.st
- * Author: David Blackburn
- * Created: May 03, 2012
- ********************************************************************
- * Implementation of library SMRamp
- ********************************************************************) 
+(*
+* File: SMR_SetErrorString.st
+* Copyright (c) 2023 Loupe
+* https://loupe.team
+* 
+* This file is part of SMRamp, licensed under the MIT License.
+*
+*)
 
 
 (********************************************************************)

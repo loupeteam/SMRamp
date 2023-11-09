@@ -1,13 +1,11 @@
-(********************************************************************
- * COPYRIGHT -- B&R Industrial Automation
- ********************************************************************
- * Library: SMRamp
- * File: SMRamp.fun
- * Author: blackburnd
- * Created: August 31, 2009
- ********************************************************************
- * Functions and function blocks of library SMRamp
- ********************************************************************)
+(*
+* File: SMRamp.fun
+* Copyright (c) 2023 Loupe
+* https://loupe.team
+* 
+* This file is part of SMRamp, licensed under the MIT License.
+*
+*)
 
 FUNCTION SMR_AxisFn_Cyclic : BOOL (*This function handles cyclic motion on the Ramp Mode axis.*)
 	VAR_IN_OUT

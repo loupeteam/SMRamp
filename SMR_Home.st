@@ -1,13 +1,11 @@
-(********************************************************************
- * COPYRIGHT -- B&R Industrial Automation
- ********************************************************************
- * Library: SMRamp
- * File: Home.st
- * Author: blackburnd
- * Created: September 14, 2009
- ********************************************************************
- * Implementation of library SMRamp
- ********************************************************************) 
+(*
+* File: SMR_Home.st
+* Copyright (c) 2023 Loupe
+* https://loupe.team
+* 
+* This file is part of SMRamp, licensed under the MIT License.
+*
+*)
 
 (*Function to perform homing functionality.*)
 

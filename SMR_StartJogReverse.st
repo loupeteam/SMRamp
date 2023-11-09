@@ -1,13 +1,11 @@
-(********************************************************************
- * COPYRIGHT --  
- ********************************************************************
- * Library: SMRamp
- * File: SMR_StartJogReverse.st
- * Author: David
- * Created: April 18, 2011
- ********************************************************************
- * Implementation of library SMRamp
- ********************************************************************) 
+(*
+* File: SMR_StartJogReverse.st
+* Copyright (c) 2023 Loupe
+* https://loupe.team
+* 
+* This file is part of SMRamp, licensed under the MIT License.
+*
+*)
 
 
 (********************************************************************)
