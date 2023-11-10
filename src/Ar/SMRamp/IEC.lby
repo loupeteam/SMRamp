@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?AutomationStudio Version=4.3.8.58 SP?>
+<Library Version="3.02.1" Description="Ramp mode wrapper library." xmlns="http://br-automation.co.at/AS/Library">
+  <Files>
+    <File Description="Exported data types">SMRamp.typ</File>
+    <File Description="Exported constants">SMRamp.var</File>
+    <File Description="Exported functions and function blocks">SMRamp.fun</File>
+    <File Description="This function handles cyclic motion on the Ramp Mode axis.">SMR_AxisFn_Cyclic.st</File>
+    <File Description="This function sets the bits in the control word based on the axis input values.">SMR_SetMpGenControl.st</File>
+    <File Description="This is an internal function that maps out the status from the status UINT.">SMR_GetDriveStatus.st</File>
+    <File Description="This function sets the state based on the status bits.">SMR_SetState.st</File>
+    <File Description="Function to perform homing functionality.">SMR_Home.st</File>
+    <File Description="Find edges for homing.">SMR_HomeFindEdge.st</File>
+    <File Description="Function which checks homing parameters.  Returns TRUE if pars are OK.">SMR_CheckHomePAR.st</File>
+    <File Description="Start a homing move">SMR_StartHome.st</File>
+    <File Description="Start an absolute move">SMR_StartMoveAbsolute.st</File>
+    <File Description="Start an additive move">SMR_StartMoveAdditive.st</File>
+    <File Description="Start a velocity move">SMR_StartMoveVelocity.st</File>
+    <File Description="Starts a TrackSetPosition move">SMR_StartTrackSetPosition.st</File>
+    <File Description="Starts a JogForward move">SMR_StartJogForward.st</File>
+    <File Description="Starts a JogReverse move">SMR_StartJogReverse.st</File>
+    <File Description="Code to set Busy and Done in the STEN_WAIT state">SMR_SetBusyDone.st</File>
+    <File Description="Check limit switches">SMR_CheckLimitSw.st</File>
+    <File Description="Update motion parameters if they change">SMR_UpdatePars.st</File>
+    <File Description="Set the error string based on the error ID">SMR_SetErrorString.st</File>
+  </Files>
+  <Dependencies>
+    <Dependency ObjectName="AsIOAcc" />
+    <Dependency ObjectName="standard" />
+    <Dependency ObjectName="SpdEstLib" />
+    <Dependency ObjectName="brsystem" />
+    <Dependency ObjectName="AsBrStr" />
+  </Dependencies>
+</Library>

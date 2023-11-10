@@ -1,0 +1,13 @@
+(********************************************************************
+ * COPYRIGHT -- Automation Resources Group
+ ********************************************************************
+ * Library: SpdEstLib
+ * File: SpdEstLib.var
+ * Author: blackburnd
+ * Created: May 19, 2010
+ ********************************************************************
+ * Constants of library SpdEstLib
+ ********************************************************************)
+VAR CONSTANT
+	SPDEST_ZERO : REAL := 1.0e-006;
+END_VAR

@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+*{margin:0;padding:0;}
+body {
+	font:13.34px helvetica,arial,freesans,clean,sans-serif;
+	color:black;
+	line-height:1.4em;
+	background-color: #F8F8F8;
+	padding: 0.7em;
+}
+p {
+	margin:1em 0;
+	line-height:1.5em;
+}
+table {
+	font-size:inherit;
+	font:100%;
+	margin:1em;
+}
+table th{border-bottom:1px solid #bbb;padding:.2em 1em;}
+table td{border-bottom:1px solid #ddd;padding:.2em 1em;}
+input[type=text],input[type=password],input[type=image],textarea{font:99% helvetica,arial,freesans,sans-serif;}
+select,option{padding:0 .25em;}
+optgroup{margin-top:.5em;}
+pre,code{font:12px Monaco,"Courier New","DejaVu Sans Mono","Bitstream Vera Sans Mono",monospace;}
+pre {
+	margin:1em 0;
+	font-size:12px;
+	background-color:#eee;
+	border:1px solid #ddd;
+	padding:5px;
+	line-height:1.5em;
+	color:#444;
+	overflow:auto;
+	-webkit-box-shadow:rgba(0,0,0,0.07) 0 1px 2px inset;
+	-webkit-border-radius:3px;
+	-moz-border-radius:3px;border-radius:3px;
+}
+pre code {
+	padding:0;
+	font-size:12px;
+	background-color:#eee;
+	border:none;
+}
+code {
+	font-size:12px;
+	background-color:#f8f8ff;
+	color:#444;
+	padding:0 .2em;
+	border:1px solid #dedede;
+}
+img{border:0;max-width:100%;}
+abbr{border-bottom:none;}
+a{color:#4183c4;text-decoration:none;}
+a:hover{text-decoration:underline;}
+a code,a:link code,a:visited code{color:#4183c4;}
+
+h1,h2,h3,h4,h5,h6{border:0;}
+
+h1{font-size:200%;margin-top:1em;margin-bottom:1em}
+
+h2{font-size:170%;padding-bottom:.5em;border-bottom:1px solid #d0d0d0;margin-top:1em;}
+
+h3{margin-top:1em;}
+
+hr{border:1px solid #ddd;}
+ul{margin:1em 0 1em 2em;}
+ol{margin:1em 0 1em 2em;}
+ul li,ol li{margin-top:.5em;margin-bottom:.5em;}
+ul ul,ul ol,ol ol,ol ul{margin-top:0;margin-bottom:0;}
+
+blockquote{margin:1em 0;border-left:5px solid #ddd;padding-left:.6em;color:#555;}
+
+dt{font-weight:bold;margin-left:1em;}
+dd{margin-left:2em;margin-bottom:1em;}
+@media screen and (min-width: 768px) {
+    body {
+        width: 748px;
+        margin:10px auto;
+    }
+}
+</style>
+<title>SpdEstLib Library</title>
+</head>
+<body>
+<p><img src="http://automationresourcesgroup.com/images/arglogo254x54.png" alt="Automation Resources Group" /></p>
+
+<h1>SpdEstLib Library</h1>
+
+<p>The SpdEstLib library provides function blocks for estimating speed based on sampled position data, such as an encoder position. The estimator consists of a filtered differentiator with a corrective term designed to react quickly to changing speeds. The result is a speed estimate with good noise rejection at steady speed and good tracking during speed changes.</p>
+
+<h1>Usage</h1>
+
+<p>The SpdEstLib library consists of two function blocks, <strong>SpeedEst</strong> for 32-bit (DINT) position values, and <strong>SpeedEst_INT</strong> for 16-bit (INT) positions. For an example of how to use this in a project, please see the ARG Automation Studio Starter Project at <a href="https://github.com/autresgrp/StarterProject">https://github.com/autresgrp/StarterProject</a>.</p>
+
+<h2>Initialization</h2>
+
+<p>No initialization is required to use the speed estimation function blocks. It is possible to set the function block parameters in the INIT routine of your program, however.</p>
+
+<p>The sampling period, <strong>T</strong>, is in seconds and should be set to the cycle time of the task class in which the function block is called. The task class cycle time can be obtained using the <strong>RTInfo</strong> function block from the brsystem library. Note that the <strong>RTInfo</strong> function block returns the cycle time in microseconds, and the speed estimation function blocks expect a value in seconds. The sampling of the position data should also be synchronized to the task class system.</p>
+
+<p>The first order filter time constant, <strong>tf</strong>, is in seconds and should be set based on the level of noise rejection desired. It should be set to a value greater than or equal to 0 s.</p>
+
+<p>The <strong>deadband</strong> parameter determines how quickly the corrective term kicks in. It has the same units as the sampled position. Smaller values of <strong>deadband</strong> lead to a more aggressive corrective term, and larger values lead to a less aggressive corrective term. <strong>DEADBAND SHOULD NOT BE SET TO 0 UNLESS K IS ALSO SET TO 0.</strong></p>
+
+<p><strong>K</strong> is the gain of the corrective term in units of 1/s. Smaller values of <strong>K</strong> lead to a less aggressive corrective term, and larger values lead to a more aggressive corrective term. If <strong>K</strong> is set too low, then the reaction of the corrective term can become too slow. If <strong>K</strong> is set too high, then the corrective term can become unstable. A good starting point for <strong>K</strong> is the sampling frequency, 1/<strong>T</strong>. The corrective term can be disabled by setting <strong>K</strong> to 0.</p>
+
+<pre><code>RTInfo_0.enable:=       1;
+RTInfo_0();
+
+SpeedEst_0.T:=          UDINT_TO_REAL(RTInfo_0.cycle_time) / 1000000.0;
+SpeedEst_0.tf:=         0.200;
+SpeedEst_0.deadband:=   20;
+SpeedEst_0.K:=          20;
+</code></pre>
+
+<h2>Cyclic Operation</h2>
+
+<p>To estimate speed, the function block must be called in the CYCLIC routine of your program, once every scan, unconditionally. The function block should not be called more than once per scan. The sampled position should be entered in the function block <strong>Position</strong> input every scan.</p>
+
+<pre><code>SpeedEst_0.Position:=   SampledPosition;
+
+SpeedEst_0();
+
+EstimatedSpeed:=    SpeedEst_0.Speed_est;
+</code></pre>
+</body>
+</html>
