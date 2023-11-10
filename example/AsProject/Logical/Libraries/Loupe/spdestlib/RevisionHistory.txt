@@ -1,0 +1,25 @@
+0.2 - 20160202 - Fix another problem with fast speed and steady state error
+
+0.1.0 - 20120425 - First release candidate.
+
+0.0.8 - 20120425 - Removed SpdAccEst, renamed FUBs from Spd.. to Speed..
+			Changed fast speed handling to get rid of steady state error
+
+0.0.7 - 20110516 - SpdEst and SpdEst_INT are tested
+
+0.0.6 - 20110516 - Uncommented and modified code at line 97 of SpdEst.st to handle nonzero speed reported while stopped
+			Added same code to SpdEst_INT
+			Removed unnecessary SimulateRolloverINT function (REAL_TO_INT does the same thing)
+			Removed unused constants (MIN_INT, INT_ROLLOVER, etc.)
+
+0.0.5 - 20110504 - Removed old SpdEst function block code
+			Added commented code at line 97 of SpdEst.st to handle nonzero speed reported while stopped
+
+0.0.4 - 20101208 - Changed SpdEst to be DINT based. DINT rollover does not need to be corrected for, since subtraction happens in the DINT range.
+
+0.0.3 - 20101108 - Finished INT rollover correction (DINT rollover happens above where REALs lose integer resolution, so, it is ignored for now)
+
+0.0.2 - 2010xxxx - Started INT rollover correction (not DINT)
+
+0.0.1 - 2010xxxx - First test version
+			

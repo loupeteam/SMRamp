@@ -1,0 +1,15 @@
+{
+  "name": "@loupeteam/spdestlib",
+  "version": "0.2.0",
+  "description": "Loupe's spdestlib library for Automation Runtime",
+  "homepage": "https://loupeteam.github.io/Sandbox/libraries/spdestlib.html",
+  "scripts": {},
+  "keywords": [],
+  "author": "Loupe",
+  "license": "Loupe Software License Agreement",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/loupeteam/spdestlib"
+  },
+  "dependencies": {}
+}
