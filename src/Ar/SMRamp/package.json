@@ -1,0 +1,20 @@
+{
+  "name": "@loupeteam/smramp",
+  "version": "0.0.0",
+  "description": "Ramp mode wrapper library for B&R Automation Studio (IEC library)",
+  "homepage": "https://loupeteam.github.io/LoupeDocs/libraries/smramp.html",
+  "scripts": {},
+  "keywords": [],
+  "author": "Loupe",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/loupeteam/SMRamp"
+  },
+  "lpm": {
+    "type": "library"
+  },
+  "dependencies": {
+    "@loupeteam/spdestlib": ">=1.0.0"
+  }
+}
