@@ -1,3 +1,5 @@
+4.0.0 - Migrate to Automation Studio 6. Major version bump for AS6 platform compatibility.
+
 3.2.1 - Migrate from AsString to AsBrStr
 
 3.02.0 - 20120502 - Added documentation. Added SMR_HOMEMODE_LIMIT_SWITCH constant to be consistent with MC_Home FUB.

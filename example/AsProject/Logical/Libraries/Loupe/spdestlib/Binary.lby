@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<Library xmlns="http://br-automation.co.at/AS/Library" Version="0.02.0" SubType="Binary">
+<Library xmlns="http://br-automation.co.at/AS/Library" Version="1.0.0" SubType="Binary">
   <Files>
     <File>SpdEstLib.html</File>
     <File>SpdEstLib.md</File>
@@ -7,5 +7,5 @@
     <File Description="Exported data types">SpdEstLib.typ</File>
     <File Description="Exported constants">SpdEstLib.var</File>
     <File Description="Exported functions and function blocks">SpdEstLib.fun</File>
-  </Files>
+    </Files>
 </Library>
