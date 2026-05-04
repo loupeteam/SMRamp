@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <?AutomationStudio Version=4.3.8.58 SP?>
-<Library Version="3.02.1" Description="Ramp mode wrapper library." xmlns="http://br-automation.co.at/AS/Library">
+<Library Version="4.0.0" Description="Ramp mode wrapper library." xmlns="http://br-automation.co.at/AS/Library">
   <Files>
     <File Description="Exported data types">SMRamp.typ</File>
     <File Description="Exported constants">SMRamp.var</File>
@@ -27,7 +27,7 @@
   <Dependencies>
     <Dependency ObjectName="AsIOAcc" />
     <Dependency ObjectName="standard" />
-    <Dependency ObjectName="SpdEstLib" />
+    <Dependency ObjectName="SpdEstLib" FromVersion="1.0.0" />
     <Dependency ObjectName="brsystem" />
     <Dependency ObjectName="AsBrStr" />
   </Dependencies>
